@@ -83,6 +83,7 @@ When you run the Web application it will allow the ability to Create, Update and
 NOTE: port 44351 may different on your machine, change accordingly.
 
 
+
 GET RECORDS VIA HTTPGET
 
 --> Run Visual Studio 2019 project, and it displays browser.
@@ -95,6 +96,7 @@ It displays the following :
 [{"Id":1,"FirstName":"Tim","LastName":"Anand","Title":"Mr"},{"Id":2,"FirstName":"Lucy","LastName":"Smith","Title":"Miss"}]
 
 NOTE: Make sure there is data in the Staff Members table before running this otherwise it will display [].
+
 
 
 ADD RECORDS VIA HTTPPOST
@@ -138,6 +140,7 @@ Click Text and select JSON
 Click 'Send' button.
 
 --> Update Id=3 StaffMembers record on CoreDemoADONet Database.
+
 
 
 
