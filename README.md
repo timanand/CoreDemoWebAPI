@@ -4,7 +4,7 @@ CoreDemoWebAPI is a an ASP.NET Core Application that does CRUD (Create, Read, Up
 
 
 ## Pre-Requisites
-The following are mandatory for the CoreDemoWebAPI application to run :
+The following are mandatory for the CoreDemoWebAPI application to run:
 
 1. Microsoft .NET Core 5.0 Runtime or SDK.
 2. Microsoft SQL Server. 
