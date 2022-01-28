@@ -67,12 +67,14 @@ The following are mandatory for the CoreDemoWebAPI application to run:
 
 	ii. Sign onto System
 
-	iii. In Explorer, double click on file, 'CoreDemoWebAPI\CoreDemoWebAPI\CoreDemoWebAPI\SQL Server Files\CreateDatabaseAndTable.sql'
-	
+	iii. In Explorer, double click on file, 'CoreDemoWebAPI\CoreDemoWebAPI\CoreDemoWebAPI\SQL Server Files\CreateDatabaseAndTable.sql'	
 
 	iv. Run the Execute command or equivalent to run the query which will create Database, 'CoreDemoADONet' and Table : 'dbo.StaffMembers' in SQL Server.
 
-
+	v. Also run the files, 'CoreDemoWebAPI\CoreDemoWebAPI\CoreDemoWebAPI\SQL Server Files\CreateTable_UserSecurity.sql'
+			       'CoreDemoWebAPI\CoreDemoWebAPI\CoreDemoWebAPI\SQL Server Files\AddTestDataToTable_UserSecurity.sql'
+			       	
+	
 
 ## Usage
 
@@ -84,78 +86,143 @@ NOTE: port 44351 may different on your machine, change accordingly.
 
 
 
+AUTHENTICATE
+
+--> Run Visual Studio 2019 project, and it displays browser.
+
+Run Postman App
+Click (+ for new tab)
+
+Select POST
+https://localhost:44351/api/staffmembers/authenticate
+
+Body tab
+raw - JSON
+{"username":"test1","password":"password1"}
+
+Headers tab
+Key:Content-Type	Value:application/json
+
+Click 'Send' button
+---> this will return token string
+
+
+
 GET RECORDS VIA HTTPGET
 
 --> Run Visual Studio 2019 project, and it displays browser.
-Type the following in the browser,
 
-https://localhost:44351/api/StaffMembers
+Run Postman App
+Click (+ for new tab)
 
-It displays the following :
+Select GET
+https://localhost:44351/api/staffmembers/read
 
-[{"Id":1,"FirstName":"Tim","LastName":"Anand","Title":"Mr"},{"Id":2,"FirstName":"Lucy","LastName":"Smith","Title":"Miss"}]
+Headers tab
+Key:Authorization	 Value:Bearer <Token String>
 
-NOTE: Make sure there is data in the Staff Members table before running this otherwise it will display [].
+Click 'Send' button
+---> this will return records from StaffMembers table :
+
+[
+ 
+   {
+        "Id": 11,
+        "FirstName": "Tim",
+        "LastName": "Anand",
+        "Title": "Mr"
+    },
+    {
+        "Id": 12,
+        "FirstName": "Tanya",
+        "LastName": "Kaur",
+        "Title": "Miss"
+    }
+
+]
 
 
 
 ADD RECORDS VIA HTTPPOST
 
-Run CoreDemoWebAPI Visual Studio 2019 application
+--> Run Visual Studio 2019 project, and it displays browser.
 
 Run Postman App
 Click (+ for new tab)
 
-Select POST from dropdown
-
+Select POST
 https://localhost:44351/api/staffmembers/create
 
-Click Body
-Click Raw
-Click Text and select JSON
+Headers tab
+Key:Authorization	 Value:Bearer <Token String>
 
-{"FirstName":"Katrina","LastName":"Patel","Title":"Miss"}
+Body tab
+raw - JSON
+{
+    "FirstName":"Tanya",
+    "LastName":"Kaur",
+    "Title":"Miss"
+}
 
-Click 'Send' button.
 
---> Record will be written to StaffMembers table on CoreDemoADONet Database.
-
+Click 'Send' button
+---> this will add StaffMembers record 
 
 
 
 
 UPDATE RECORDS VIA HTTPPUT
 
-Select PUT from dropdown
+--> Run Visual Studio 2019 project, and it displays browser.
 
-https://localhost:44351/api/staffmembers/update/3
+Run Postman App
+Click (+ for new tab)
 
-Click Body
-Click Raw
-Click Text and select JSON
+Select PUT
+https://localhost:44351/api/staffmembers/update/12
 
-{"Id": 3,"FirstName":"Tanya","LastName":"Anand","Title":"Miss"}
+Headers tab
+Key:Authorization	 Value:Bearer <Token String>
 
+Body Tab
+raw - JSON
+{
+    "Id": 12,
+    "FirstName":"Tanya",
+    "LastName":"Kaur",
+    "Title":"Mss"
+}
 
-Click 'Send' button.
-
---> Update Id=3 StaffMembers record on CoreDemoADONet Database.
+Click 'Send' button
+---> this will update StaffMembers record
 
 
 
 
 DELETE RECORDS VIA HTTP DELETE
 
-Select DELETE from dropdown
+--> Run Visual Studio 2019 project, and it displays browser.
 
-https://localhost:44351/api/staffmembers/delete/3
+Run Postman App
+Click (+ for new tab)
 
-NOTE: Data in Body is not required!
+Select DELETE
+https://localhost:44351/api/staffmembers/delete/16
 
-Click 'Send' button.
+Headers tab
+Key:Authorization	 Value:Bearer <Token String>
 
-It will display Status: 200 OK.
+Body Tab
+raw - JSON
+{
+    "Id": 12,
+    "FirstName":"Tanya",
+    "LastName":"Kaur",
+    "Title":"Mss"
+}
 
+Click 'Send' button
+---> this will delete StaffMembers record
 
 
 
