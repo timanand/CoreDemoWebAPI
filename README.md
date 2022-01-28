@@ -8,6 +8,7 @@ The following are mandatory for the CoreDemoWebAPI application to run:
 
 1. Microsoft .NET Core 5.0 Runtime or SDK.
 2. Microsoft SQL Server. 
+3. Postman application.
 
 
 ## Installation
