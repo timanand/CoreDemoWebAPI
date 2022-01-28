@@ -11,6 +11,12 @@ using System.Threading.Tasks;
 
 using CoreDemoWebAPI.Data;
 
+// AANA - BEGIN
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+// AANA - END
+
 
 namespace CoreDemoWebAPI
 {
@@ -27,15 +33,38 @@ namespace CoreDemoWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
                     options.UseMemberCasing();
                 } // note : default is camel casing 
             ); // with this we can use WebAPI (http get, post, put calls)
 
+
+            // AANA - BEGIN
+            var key = "This is my test key"; // In Real Life application, this will be more complex !
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+
             //20/10/2021 Ioc mapping for unit of work
             services.AddScoped<IUow, Uow>();
+            services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(Configuration, key));
+            // AANA - END
 
         }
 
@@ -57,7 +86,9 @@ namespace CoreDemoWebAPI
 
             app.UseRouting();
 
+            app.UseAuthentication(); // Added by AANA
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -65,6 +96,8 @@ namespace CoreDemoWebAPI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
         }
     }
 }

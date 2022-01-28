@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 using Microsoft.AspNetCore.Mvc;
 using CoreDemoWebAPI.Domain;
-
-
 using CoreDemoWebAPI.Data;
+
+using Microsoft.AspNetCore.Authorization; // Added by AANA
+
 
 namespace CoreDemoWebAPI.Controllers
 {
-    [ApiController]
+	[Authorize] // Added by AANA
+	[ApiController]
     public class StaffMembersController : ControllerBase
     {
 
 		private readonly IUow _uow;
 
-		public StaffMembersController(IUow uow)
-        {
+		private readonly IJwtAuthenticationManager jwtAuthenticationManager; // Added by AANA
+		public StaffMembersController(IUow uow, IJwtAuthenticationManager jwtAuthenticationManager) // Added by AANA
+		{
 			_uow = uow;
-        }
+			this.jwtAuthenticationManager = jwtAuthenticationManager;
+		}
 
 
 		// Get Staff Members
 		[HttpGet]
-		[Route("api/staffmembers")] // this end point or url is important !
+		[Route("api/staffmembers/read")] // this end point or url is important !
 		public IActionResult GetEmployees() // can give any name here
 		{
 			var staffList = _uow.StaffRepository.GetAll();
@@ -36,7 +39,7 @@ namespace CoreDemoWebAPI.Controllers
 
 		// Adds new record
 		[HttpPost]
-		[Route("api/staffmembers/create")]
+		[Route("api/staffmembers/create")] // this end point or url is important ! 
 		public IActionResult PostEmployee(StaffMember staffMember)
         {
 			if (ModelState.IsValid)
@@ -54,7 +57,7 @@ namespace CoreDemoWebAPI.Controllers
 
 		// Updates record
 		[HttpPut]
-		[Route("api/staffmembers/update/{id}")]
+		[Route("api/staffmembers/update/{id}")] // this end point or url is important !
 		public IActionResult PutEmployee(int id, StaffMember staffMember)
 		{
 			if(ModelState.IsValid)
@@ -75,7 +78,7 @@ namespace CoreDemoWebAPI.Controllers
 
 		// Delete record
 		[HttpDelete]
-		[Route("api/staffmembers/delete/{id}")]
+		[Route("api/staffmembers/delete/{id}")] // this end point or url is important !
 		public IActionResult DeleteEmployee(int id, StaffMember staffMember)
 		{
 
@@ -88,5 +91,21 @@ namespace CoreDemoWebAPI.Controllers
 			return BadRequest(ModelState); // 400 + error message in json format
 		}
 
+
+		// AANA - BEGIN
+		[AllowAnonymous] // without this line, no one can call this method
+		[HttpPost("authenticate")]
+		[Route("api/staffmembers/authenticate")] // this end point or url is important !
+		public IActionResult Authenticate([FromBody] UserCred userCred)
+		{
+			var token = jwtAuthenticationManager.Authenticate
+				(userCred.Username, userCred.Password);
+
+			if (token == null)
+				return Unauthorized();
+
+			return Ok(token);
+		}
+		// AANA - END
 	}
 }

@@ -23,6 +23,8 @@ namespace CoreDemoWebAPI.Data
 
         //List<StaffMember> SearchEmployees(string search);
 
+        bool LocateUserSecurity(string userId, string password);
+
     }
 
 }

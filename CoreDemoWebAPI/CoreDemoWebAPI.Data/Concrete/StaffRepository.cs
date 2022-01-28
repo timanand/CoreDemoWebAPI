@@ -95,7 +95,7 @@ namespace CoreDemoWebAPI.Data
                 con = DbHelper.CreateConnection();
                 con.Open();
 
-                IDbCommand cmd = DbHelper.CreateCommand("SELECT * FROM StaffMembers", con);
+                IDbCommand cmd = DbHelper.CreateCommand("SELECT * FROM StaffMembers ORDER BY Id", con);
                 IDataReader reader = cmd.ExecuteReader();
 
 
@@ -247,6 +247,51 @@ namespace CoreDemoWebAPI.Data
 
         }
 
+
+
+        public bool LocateUserSecurity(string userId, string password)
+        {
+            int noRecs = 0;
+
+            IDbConnection con = null;
+            StaffMember staffMember = new StaffMember();
+
+            try
+            {
+                con = DbHelper.CreateConnection();
+                con.Open();
+
+                IDbCommand cmd = DbHelper.CreateCommand("SELECT COUNT(*) AS c FROM UserSecurity WHERE UserId='" + userId + "' AND Password='" + password + "'", con);
+                IDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    noRecs = (int)reader.GetValue(reader.GetOrdinal("c"));
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+
+            finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+
+            if (noRecs == 0)
+            {
+                return false;
+            }
+
+            else
+            {
+                return true;
+            }
+        }
 
 
 
