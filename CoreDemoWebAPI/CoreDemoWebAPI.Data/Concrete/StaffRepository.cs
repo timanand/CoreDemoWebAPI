@@ -27,9 +27,9 @@ namespace CoreDemoWebAPI.Data
         }
 
 
-        public void Add(StaffMember staffMember)
+        public bool Add(StaffMember staffMember)
         {
-
+            bool err = false;
             IDbConnection con = null;
 
             try
@@ -55,11 +55,14 @@ namespace CoreDemoWebAPI.Data
                 con.Close();
                 con.Dispose();
             }
+
+            if (err) return false;
+            else return true;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-
+            bool err = false;
             IDbConnection con = null;
 
             try
@@ -81,6 +84,9 @@ namespace CoreDemoWebAPI.Data
                 con.Close();
                 con.Dispose();
             }
+
+            if (err) return false;
+            else return true;
 
         }
 
@@ -166,8 +172,9 @@ namespace CoreDemoWebAPI.Data
 
         }
 
-        public void Edit(StaffMember staffMember)
+        public bool Edit(StaffMember staffMember)
         {
+            bool err = false;
 
             IDbConnection con = null;
 
@@ -196,6 +203,9 @@ namespace CoreDemoWebAPI.Data
                 con.Close();
                 con.Dispose();
             }
+
+            if (err) return false;
+            else return true;
         }
 
 

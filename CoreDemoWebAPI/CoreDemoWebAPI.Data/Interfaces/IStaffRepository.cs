@@ -13,17 +13,17 @@ namespace CoreDemoWebAPI.Data
     {
         List<StaffMember> GetAll();
 
-        //StaffMember GetById(int id);
+        bool Add(StaffMember staffMember);
 
-        void Add(StaffMember staffMember);
+        bool Edit(StaffMember staffMember);
 
-        void Edit(StaffMember staffMember);
-
-        void Delete(int id);
-
-        //List<StaffMember> SearchEmployees(string search);
+        bool Delete(int id);
 
         bool LocateUserSecurity(string userId, string password);
+
+        StaffMember GetById(int id);
+
+        List<StaffMember> SearchEmployees(string search);
 
     }
 
