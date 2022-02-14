@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDemoWebAPI.Data", "Core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDemoWebAPI.Domain", "CoreDemoWebAPI.Domain\CoreDemoWebAPI.Domain.csproj", "{F98D792C-55EE-40AB-A819-E4D6B018843F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreDemoWebAPI.Tests", "CoreDemoWebAPI.Tests\CoreDemoWebAPI.Tests.csproj", "{DC493376-BB01-49A4-ABD4-45FAA8F299D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDemoWebAPI.UnitTests", "CoreDemoWebAPI.Tests\CoreDemoWebAPI.UnitTests.csproj", "{DC493376-BB01-49A4-ABD4-45FAA8F299D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDemoWebAPI.IntegrationTests", "CoreDemoWebAPI.IntegrationTests\CoreDemoWebAPI.IntegrationTests.csproj", "{7B02B05F-0FF3-41FD-85DA-ADA55CEC877C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DC493376-BB01-49A4-ABD4-45FAA8F299D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC493376-BB01-49A4-ABD4-45FAA8F299D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC493376-BB01-49A4-ABD4-45FAA8F299D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B02B05F-0FF3-41FD-85DA-ADA55CEC877C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B02B05F-0FF3-41FD-85DA-ADA55CEC877C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B02B05F-0FF3-41FD-85DA-ADA55CEC877C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B02B05F-0FF3-41FD-85DA-ADA55CEC877C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

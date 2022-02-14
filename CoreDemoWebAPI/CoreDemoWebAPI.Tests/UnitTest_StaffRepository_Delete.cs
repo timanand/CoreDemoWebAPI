@@ -4,17 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 using Xunit;
-
-using CoreDemoWebAPI.Data;
 using Moq;
 using Microsoft.Extensions.Configuration;
-
-// AANA
-//using CoreDemoWebAPI.Data.Interfaces;
+using CoreDemoWebAPI.Data;
 using CoreDemoWebAPI.Domain;
-
 
 
 namespace CoreDemoWebAPI.Tests
@@ -57,10 +51,6 @@ namespace CoreDemoWebAPI.Tests
         }
 
 
-
-
     }
-
-
 
 }

@@ -1,22 +1,18 @@
-using System;
-using Xunit;
+﻿using System;
+using System.Linq;
 
-using CoreDemoWebAPI.Data;
+using Xunit;
 using Moq;
 using Microsoft.Extensions.Configuration;
-
-// AANA
-//using CoreDemoWebAPI.Data.Interfaces;
 using System.Collections.Generic;
+using CoreDemoWebAPI.Data;
 using CoreDemoWebAPI.Domain;
-using System.Linq;
+
 
 namespace CoreDemoWebAPI.Tests
 {
     public class UnitTest_StaffRepository_GetAll
     {
-
-
         int _defaultID = 1;
         string _defaultFirstName = "Arvinder";
         string _defaultLastName = "Anand";
@@ -59,11 +55,10 @@ namespace CoreDemoWebAPI.Tests
 
         [Fact]
         public void GetAll_StaffMemberInList_Match_Id()
-        {         
+        {
             // Ensure Id in listbox matches default Id
             Assert.Equal(_defaultID, listStaffReturned[0].Id);
         }
-
 
 
 
@@ -91,6 +86,7 @@ namespace CoreDemoWebAPI.Tests
             // Ensure Title in listbox matches default Title
             Assert.Equal(_defaultTitle, listStaffReturned[0].Title);
         }
+
 
     }
 }

@@ -61,10 +61,28 @@ namespace CoreDemoWebAPI
             });
 
 
+            // 09/02/2022 - BEGIN
+
+            var builder = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddUserSecrets("155b0bd7-6992-4ed6-8b80-edafb814d098");
+            var config = builder.Build();
+
+            string connectionString = config["ConnectionStrings:StaffConnex"];
+
+            //services.AddTransient<IStaffRepository>(p => new StaffRepository(connectionString));
+            services.AddTransient<IProvider>(p => new Provider(connectionString));
+
+
+            // 09/02/2022 - END
+
+
+
             //20/10/2021 Ioc mapping for unit of work
             services.AddScoped<IUow, Uow>();
-            services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(Configuration, key));
+            //services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(Configuration, key));
+            services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(Configuration, connectionString, key));
             // AANA - END
+
+
 
         }
 

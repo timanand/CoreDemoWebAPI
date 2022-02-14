@@ -18,13 +18,27 @@ namespace CoreDemoWebAPI.Data
         private readonly DbHelper _DbHelper;
 
 
-        // Constructor
-        public StaffRepository(IConfiguration configuration)
-        {
-            string connectionstring = configuration.GetConnectionString("StaffConnex");
+        // 09/02/2022 - BEGIN
 
+        // Constructor
+        //public StaffRepository(IConfiguration configuration)
+        //{
+        //    string connectionstring = configuration.GetConnectionString("StaffConnex");
+        //    _DbHelper = new DbHelper(connectionstring);
+        //}
+
+
+        //Constructor
+        public StaffRepository(string connectionstring)
+        {
+            //string connectionstring = configuration.GetConnectionString("StaffConnex");
+            //connectionstring = "Data Source=FYD8ZD3\\SQLEXPRESS; Initial Catalog=CoreDemoADONET; integrated security=false;user id=arvinder;password=TeachApple6732$#;";
             _DbHelper = new DbHelper(connectionstring);
         }
+
+        // 09/02/2022 - END
+
+
 
 
         public bool Add(StaffMember staffMember)

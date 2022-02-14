@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// AANA - BEGIN
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using CoreDemoWebAPI.Data;
 using Microsoft.Extensions.Configuration;
-// AANA - END
 
 
 namespace CoreDemoWebAPI
@@ -27,14 +25,18 @@ namespace CoreDemoWebAPI
 
         private readonly IConfiguration _configuration;
 
-        public IStaffRepository StaffRepository => new StaffRepository(_configuration);
+        private readonly string _connectionString = "";
+
+        public IStaffRepository StaffRepository => new StaffRepository(_connectionString);
+
 
         private readonly string key;
 
-        public JwtAuthenticationManager(IConfiguration configuration, string key)
+        public JwtAuthenticationManager(IConfiguration configuration, string connectionString, string key)
         {
             this.key = key;
             this._configuration = configuration;
+            this._connectionString = connectionString;
         }
 
 

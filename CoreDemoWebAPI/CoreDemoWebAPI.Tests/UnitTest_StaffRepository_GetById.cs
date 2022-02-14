@@ -1,32 +1,25 @@
 ﻿using System;
-using Xunit;
 
-using CoreDemoWebAPI.Data;
+using Xunit;
 using Moq;
 using Microsoft.Extensions.Configuration;
-
-// AANA
-//using CoreDemoWebAPI.Data.Interfaces;
 using System.Collections.Generic;
+using CoreDemoWebAPI.Data;
 using CoreDemoWebAPI.Domain;
-using System.Linq;
+
 
 namespace CoreDemoWebAPI.Tests
 {
+
     public class UnitTest_StaffRepository_GetById
     {
-
-
         int _defaultID = 1;
         string _defaultFirstName = "Arvinder";
         string _defaultLastName = "Anand";
         string _defaultTitle = "Mr";
 
-        //List<StaffMember> listStaff = new List<StaffMember>();
         Mock<IStaffRepository> mock;
-
         StaffMember staffMember;
-
 
 
         // Constructor is the Initialise in xUnit
@@ -46,9 +39,8 @@ namespace CoreDemoWebAPI.Tests
         [Fact]
         public void GetById_Match_Id()
         {
-           Assert.Equal(_defaultID, staffMember.Id);
+            Assert.Equal(_defaultID, staffMember.Id);
         }
-
 
 
         [Fact]
@@ -70,6 +62,7 @@ namespace CoreDemoWebAPI.Tests
         {
             Assert.Equal(_defaultTitle, staffMember.Title);
         }
+
 
     }
 }

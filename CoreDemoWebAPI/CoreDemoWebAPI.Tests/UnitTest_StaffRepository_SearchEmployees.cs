@@ -1,27 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 using Xunit;
-    
-using CoreDemoWebAPI.Data;
 using Moq;
 using Microsoft.Extensions.Configuration;
-
-// AANA
-//using CoreDemoWebAPI.Data.Interfaces;
+using System.Collections.Generic;
+using CoreDemoWebAPI.Data;
 using CoreDemoWebAPI.Domain;
-
 
 
 namespace CoreDemoWebAPI.Tests
 {
+
     public class UnitTest_StaffRepository_SearchEmployees
     {
-
         int _defaultID = 1;
         string _defaultFirstName = "Arvinder";
         string _defaultLastName = "Anand";
@@ -45,7 +36,6 @@ namespace CoreDemoWebAPI.Tests
 
             // Act
             listStaffReturned = mock.Object.SearchEmployees("");
-
         }
 
 
@@ -96,7 +86,6 @@ namespace CoreDemoWebAPI.Tests
 
 
     }
-
 
 
 }
