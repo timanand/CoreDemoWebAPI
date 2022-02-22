@@ -37,6 +37,17 @@ namespace CoreDemoWebAPI.Controllers
 		}
 
 
+		// Get Staff Member
+		[HttpGet]
+		[Route("api/staffmembers/read/{id}")] // this end point or url is important !
+		public IActionResult GetEmployee(int id) // can give any name here
+		{
+			StaffMember staffMember = _uow.StaffRepository.GetById(id);
+			return Ok(staffMember); // status code of 200 and json data will get returned
+		}
+
+
+
 		// Adds new record
 		[HttpPost]
 		[Route("api/staffmembers/create")] // this end point or url is important ! 
@@ -93,8 +104,10 @@ namespace CoreDemoWebAPI.Controllers
 
 
 		// AANA - BEGIN
+		//[HttpPost("authenticate")]
+
 		[AllowAnonymous] // without this line, no one can call this method
-		[HttpPost("authenticate")]
+		[HttpPost]
 		[Route("api/staffmembers/authenticate")] // this end point or url is important !
 		public IActionResult Authenticate([FromBody] UserCred userCred)
 		{

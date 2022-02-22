@@ -13,6 +13,7 @@ namespace CoreDemoWebAPI.Data
     {
         List<StaffMember> GetAll();
 
+
         bool Add(StaffMember staffMember);
 
         bool Edit(StaffMember staffMember);

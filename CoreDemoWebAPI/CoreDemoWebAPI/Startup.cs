@@ -15,6 +15,7 @@ using CoreDemoWebAPI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models;
 // AANA - END
 
 
@@ -32,12 +33,44 @@ namespace CoreDemoWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
                     options.UseMemberCasing();
                 } // note : default is camel casing 
             ); // with this we can use WebAPI (http get, post, put calls)
+
+
+            // 21/02/2022 - Swagger BEGIN
+            //services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "dotnetClaimAuthorization", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                   {
+                       new OpenApiSecurityScheme{
+                        Reference=new OpenApiReference{
+                            Type = ReferenceType.SecurityScheme,
+                            Id="Bearer"
+                        }
+                       },
+                       new string[]{}
+                   }
+               });
+            });
+
+
+            // 21/02/2022 - Swagger END
 
 
             // AANA - BEGIN
@@ -59,6 +92,10 @@ namespace CoreDemoWebAPI
                     ValidateAudience = false
                 };
             });
+
+
+
+
 
 
             // 09/02/2022 - BEGIN
@@ -89,6 +126,18 @@ namespace CoreDemoWebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            // 18/02/2022 - Swagger BEGIN
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoreDemoWebAPI V1");
+            });
+
+            // 18/02/2022 - Swagger END
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,6 +150,7 @@ namespace CoreDemoWebAPI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
 
             app.UseRouting();
 

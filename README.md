@@ -227,6 +227,49 @@ Click 'Send' button
 
 
 
+TO RUN VISUAL STUDIO 2019 PROJECT WITH SWAGGER
+
+Run CoreDemoWebAPI project in Visual Studio 2019
+
+https://localhost:44351/swagger/index.html
+
+---> displays Swagger links etc.. including Authorize button
+
+
+Click on 'Post' for /api/staffmembers/authenticate
+
+Select 'application/json'
+Click 'Try it out'
+
+In Request Body, amend as follows :
+
+{
+  "username": "user1",
+  "password": "password1"
+}
+
+
+Click 'Execute'
+
+---> It displays token if username and password are valid in the 'StaffMembers' table.
+
+Copy and Paste token string
+
+
+
+
+Click on 'Authorize' button at top of web page
+
+Paste token in 'Value' box
+Click 'Authorize' button.
+Click 'Close'
+
+
+
+Click on any of the buttons like GET, POST, PUT, DELETE and they will work using token provided.
+
+
+
 
 ## License & Copyright
 
