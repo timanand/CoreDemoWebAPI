@@ -74,7 +74,7 @@ namespace CoreDemoWebAPI.Data
             else return true;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int? id)
         {
             bool err = false;
             IDbConnection con = null;

@@ -18,7 +18,7 @@ namespace CoreDemoWebAPI.Data
 
         bool Edit(StaffMember staffMember);
 
-        bool Delete(int id);
+        bool Delete(int? id);
 
         bool LocateUserSecurity(string userId, string password);
 

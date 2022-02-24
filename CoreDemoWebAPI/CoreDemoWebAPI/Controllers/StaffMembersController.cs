@@ -90,7 +90,7 @@ namespace CoreDemoWebAPI.Controllers
 		// Delete record
 		[HttpDelete]
 		[Route("api/staffmembers/delete/{id}")] // this end point or url is important !
-		public IActionResult DeleteEmployee(int id, StaffMember staffMember)
+		public IActionResult DeleteEmployee(int? id, StaffMember staffMember)
 		{
 
 			if (id !=null)
