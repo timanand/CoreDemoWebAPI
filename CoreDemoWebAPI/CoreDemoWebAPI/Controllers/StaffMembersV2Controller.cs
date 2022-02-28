@@ -12,17 +12,17 @@ using Microsoft.AspNetCore.Authorization; // Added by AANA
 
 namespace CoreDemoWebAPI.Controllers
 {
-	[Authorize] // Added by AANA
+	[Authorize] 
 	[ApiController]
-	[ApiVersion("1.0")]
-	[ApiExplorerSettings(GroupName = "v1")]
-	public class StaffMembersController : ControllerBase
-    {
+	[ApiVersion("2.0")]
+	[ApiExplorerSettings(GroupName = "v2")]
+	public class StaffMembersV2Controller : ControllerBase
+	{
 
 		private readonly IUow _uow;
 
 		private readonly IJwtAuthenticationManager jwtAuthenticationManager; // Added by AANA
-		public StaffMembersController(IUow uow, IJwtAuthenticationManager jwtAuthenticationManager) // Added by AANA
+		public StaffMembersV2Controller(IUow uow, IJwtAuthenticationManager jwtAuthenticationManager) // Added by AANA
 		{
 			_uow = uow;
 			this.jwtAuthenticationManager = jwtAuthenticationManager;
@@ -35,7 +35,11 @@ namespace CoreDemoWebAPI.Controllers
 		public IActionResult GetEmployees() // can give any name here
 		{
 			var staffList = _uow.StaffRepository.GetAll();
-			return Ok(staffList.ToList()); // status code of 200 and json data will get returned
+			//return Ok(staffList.ToList()); // status code of 200 and json data will get returned
+
+			// using Anonymous type, I will create a property named, 'data'
+			// when data comes in this format then we know it is coming from Verson 2
+			return Ok(new { data = staffList, Message = "API Version 2" });
 		}
 
 
@@ -54,17 +58,17 @@ namespace CoreDemoWebAPI.Controllers
 		[HttpPost]
 		[Route("api/staffmembers/create")] // this end point or url is important ! 
 		public IActionResult PostEmployee(StaffMember staffMember)
-        {
+		{
 			if (ModelState.IsValid)
-            {
+			{
 				_uow.StaffRepository.Add(staffMember);
 
 				// 201
 				return Created("", staffMember);
-            }
+			}
 
 			return BadRequest(ModelState); // 400 + error message in json format
-        }
+		}
 
 
 
@@ -73,8 +77,8 @@ namespace CoreDemoWebAPI.Controllers
 		[Route("api/staffmembers/update/{id}")] // this end point or url is important !
 		public IActionResult PutEmployee(int id, StaffMember staffMember)
 		{
-			if(ModelState.IsValid)
-            {
+			if (ModelState.IsValid)
+			{
 				if (id != staffMember.Id)
 					return BadRequest("Id is not matching");
 
@@ -95,8 +99,8 @@ namespace CoreDemoWebAPI.Controllers
 		public IActionResult DeleteEmployee(int? id, StaffMember staffMember)
 		{
 
-			if (id !=null)
-            {
+			if (id != null)
+			{
 				_uow.StaffRepository.Delete(id);
 				return Ok(staffMember);
 			}
@@ -105,8 +109,6 @@ namespace CoreDemoWebAPI.Controllers
 		}
 
 
-		// AANA - BEGIN
-		//[HttpPost("authenticate")]
 
 		[AllowAnonymous] // without this line, no one can call this method
 		[HttpPost]
@@ -121,6 +123,6 @@ namespace CoreDemoWebAPI.Controllers
 
 			return Ok(token);
 		}
-		// AANA - END
+
 	}
 }

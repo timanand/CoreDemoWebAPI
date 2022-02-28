@@ -44,11 +44,12 @@ namespace CoreDemoWebAPI
             ); // with this we can use WebAPI (http get, post, put calls)
 
 
-            // 21/02/2022 - Swagger BEGIN
-            //services.AddSwaggerGen();
+            // 24/02/2022 - Swagger and Versioning BEGIN
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "dotnetClaimAuthorization", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoreDemoWebAPI V1", Version = "v1" });
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "CoreDemoWebAPI V2", Version = "v2" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -69,10 +70,27 @@ namespace CoreDemoWebAPI
                        new string[]{}
                    }
                });
+
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
             });
 
 
-            // 21/02/2022 - Swagger END
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true; // added 24/02/2022 at 10:54
+                options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+            });
+
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+
+            // 24/02/2022 - Swagger and Versioning END
 
 
             // AANA - BEGIN
@@ -123,21 +141,24 @@ namespace CoreDemoWebAPI
 
 
 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            // 18/02/2022 - Swagger BEGIN
+            // 24/02/2022 - Swagger BEGIN
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoreDemoWebAPI V1");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "CoreDemoWebAPI V2");
             });
 
-            // 18/02/2022 - Swagger END
+            // 24/02/2022 - Swagger END
 
 
             if (env.IsDevelopment())
