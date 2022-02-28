@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using CoreDemoWebAPI.Extensions;
+using AdvancedWebAPIProject.Extensions;
 // AANA - END
 
 
@@ -171,6 +172,11 @@ namespace CoreDemoWebAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+
+            //Global Error Handling - BEGIN
+            app.ConfigureExceptionHandler();
+            //Global Error Handling - END
 
             app.UseCors("CorsPolicy");
 

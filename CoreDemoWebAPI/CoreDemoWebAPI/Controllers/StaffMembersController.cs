@@ -35,7 +35,14 @@ namespace CoreDemoWebAPI.Controllers
 		public IActionResult GetEmployees() // can give any name here
 		{
 			var staffList = _uow.StaffRepository.GetAll();
+
+			//Global Error Handling - BEGIN
+			// Uncomment below line to force exception and it goes into global error handling
+			//throw new Exception("sdsd");
+			//Global Error Handling - END
+
 			return Ok(staffList.ToList()); // status code of 200 and json data will get returned
+
 		}
 
 
