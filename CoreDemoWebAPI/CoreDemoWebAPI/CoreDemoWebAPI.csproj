@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CoreDemoWebAPI.Data\CoreDemoWebAPI.Data.csproj" />
     <ProjectReference Include="..\CoreDemoWebAPI.Domain\CoreDemoWebAPI.Domain.csproj" />
+    <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>
 
 </Project>

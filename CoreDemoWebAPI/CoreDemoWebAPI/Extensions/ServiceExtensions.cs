@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using Microsoft.AspNetCore.Builder;
+using CoreDemoWebAPI.Data;
+using LoggerService;
+
+
 namespace CoreDemoWebAPI.Extensions
 {
     public static class ServiceExtensions
@@ -19,6 +24,15 @@ namespace CoreDemoWebAPI.Extensions
             });
             
         }
+
+
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddScoped<ILoggerManager, LoggerManager>();
+        }
+
+
+
 
     }
 }

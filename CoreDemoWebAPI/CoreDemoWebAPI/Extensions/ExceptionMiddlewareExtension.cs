@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 
 using CoreDemoWebAPI.Domain.ErrorModel;
-
+using CoreDemoWebAPI.Data;
 
 namespace AdvancedWebAPIProject.Extensions
 {
     public static class ExceptionMiddlewareExtension
     {
         //public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerManager logger)
-        public static void ConfigureExceptionHandler(this IApplicationBuilder app)
+        public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerManager logger)
         {
             app.UseExceptionHandler(error =>
             {
@@ -32,7 +32,7 @@ namespace AdvancedWebAPIProject.Extensions
                     if (contextException != null)
                     {
                         // This writes to log file
-                        //logger.LogError($"Something went wrong: {contextException.Error}");
+                        logger.LogError($"Something went wrong: {contextException.Error}");
 
                         // This is related to API response
                         await context.Response.WriteAsync(new ErrorDetails()

@@ -22,10 +22,15 @@ namespace CoreDemoWebAPI.Controllers
 		private readonly IUow _uow;
 
 		private readonly IJwtAuthenticationManager jwtAuthenticationManager; // Added by AANA
-		public StaffMembersController(IUow uow, IJwtAuthenticationManager jwtAuthenticationManager) // Added by AANA
+
+		private readonly ILoggerManager _logger;
+		
+		
+		public StaffMembersController(IUow uow, IJwtAuthenticationManager jwtAuthenticationManager, ILoggerManager logger) // Added by AANA
 		{
 			_uow = uow;
 			this.jwtAuthenticationManager = jwtAuthenticationManager;
+			_logger = logger; 
 		}
 
 
@@ -40,6 +45,8 @@ namespace CoreDemoWebAPI.Controllers
 			// Uncomment below line to force exception and it goes into global error handling
 			//throw new Exception("sdsd");
 			//Global Error Handling - END
+
+			_logger.LogInfo("Here is info message from our StaffMembersController - Read Action method");
 
 			return Ok(staffList.ToList()); // status code of 200 and json data will get returned
 

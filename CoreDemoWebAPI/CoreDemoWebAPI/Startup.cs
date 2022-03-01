@@ -18,6 +18,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using CoreDemoWebAPI.Extensions;
 using AdvancedWebAPIProject.Extensions;
+
 // AANA - END
 
 
@@ -37,6 +38,9 @@ namespace CoreDemoWebAPI
         {
 
             services.ConfigureCors();
+            services.ConfigureLoggerService();
+
+
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
@@ -146,7 +150,7 @@ namespace CoreDemoWebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
 
             // 24/02/2022 - Swagger BEGIN
@@ -175,10 +179,11 @@ namespace CoreDemoWebAPI
 
 
             //Global Error Handling - BEGIN
-            app.ConfigureExceptionHandler();
+            app.ConfigureExceptionHandler(logger);
             //Global Error Handling - END
 
             app.UseCors("CorsPolicy");
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -196,7 +201,6 @@ namespace CoreDemoWebAPI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
 
         }
     }
