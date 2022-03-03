@@ -8,7 +8,7 @@ using CoreDemoWebAPI.Domain;
 using CoreDemoWebAPI.Data;
 
 using Microsoft.AspNetCore.Authorization; // Added by AANA
-
+using CoreDemoWebAPI.Data.Interfaces;
 
 namespace CoreDemoWebAPI.Controllers
 {
@@ -24,13 +24,16 @@ namespace CoreDemoWebAPI.Controllers
 		private readonly IJwtAuthenticationManager jwtAuthenticationManager; // Added by AANA
 
 		private readonly ILoggerManager _logger;
+
+		private readonly ITestClass _testClass;
 		
 		
-		public StaffMembersController(IUow uow, IJwtAuthenticationManager jwtAuthenticationManager, ILoggerManager logger) // Added by AANA
+		public StaffMembersController(IUow uow, IJwtAuthenticationManager jwtAuthenticationManager, ILoggerManager logger, ITestClass testClass) // Added by AANA
 		{
 			_uow = uow;
 			this.jwtAuthenticationManager = jwtAuthenticationManager;
-			_logger = logger; 
+			_logger = logger;
+			_testClass = testClass;
 		}
 
 
@@ -53,6 +56,8 @@ namespace CoreDemoWebAPI.Controllers
 		}
 
 
+
+
 		// Get Staff Member
 		[HttpGet]
 		[Route("api/staffmembers/read/{id}")] // this end point or url is important !
@@ -61,6 +66,19 @@ namespace CoreDemoWebAPI.Controllers
 			StaffMember staffMember = _uow.StaffRepository.GetById(id);
 			return Ok(staffMember); // status code of 200 and json data will get returned
 		}
+
+
+		// TestClass - Dependency Injection - BEGIN
+
+		// Get Staff Members
+		[HttpGet]
+		[Route("api/staffmembers/test")] // this end point or url is important !
+		public IActionResult GetTest() // can give any name here
+		{
+			return Ok(_testClass.GetConnectionString());
+		}
+
+		// TestClass - Dependency Injection - END
 
 
 

@@ -18,6 +18,8 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using CoreDemoWebAPI.Extensions;
 using AdvancedWebAPIProject.Extensions;
+using CoreDemoWebAPI.Data.Interfaces;
+using CoreDemoWebAPI.Data.Concrete;
 
 // AANA - END
 
@@ -144,8 +146,9 @@ namespace CoreDemoWebAPI
             services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(Configuration, connectionString, key));
             // AANA - END
 
-
-
+            // TestClass - Dependency Injection - BEGIN
+            services.AddScoped<ITestClass, TestClass>();
+            // TestClass - Dependency Injection - END
 
         }
 
