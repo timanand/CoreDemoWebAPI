@@ -13,7 +13,7 @@ using CoreDemoWebAPI.Models;
 
 namespace CoreDemoWebAPI.Controllers
 {
-	//[Authorize] // Added by AANA
+	[Authorize] // Added by AANA
 	[ApiController]
 	[ApiVersion("1.0")]
 	[ApiExplorerSettings(GroupName = "v1")]
