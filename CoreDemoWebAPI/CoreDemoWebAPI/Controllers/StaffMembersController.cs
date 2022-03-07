@@ -9,10 +9,11 @@ using CoreDemoWebAPI.Data;
 
 using Microsoft.AspNetCore.Authorization; // Added by AANA
 using CoreDemoWebAPI.Data.Interfaces;
+using CoreDemoWebAPI.Models;
 
 namespace CoreDemoWebAPI.Controllers
 {
-	[Authorize] // Added by AANA
+	//[Authorize] // Added by AANA
 	[ApiController]
 	[ApiVersion("1.0")]
 	[ApiExplorerSettings(GroupName = "v1")]
@@ -54,6 +55,7 @@ namespace CoreDemoWebAPI.Controllers
 			return Ok(staffList.ToList()); // status code of 200 and json data will get returned
 
 		}
+
 
 
 
@@ -111,6 +113,14 @@ namespace CoreDemoWebAPI.Controllers
 
 		[HttpPost]
 		[Route("api/staffmembers/test4")]
+		//https://localhost:44351/api/staffmembers/test5?FirstName=AAAAA&LastName=BBBBB
+
+		// Body in Postman
+		//{
+		// "FirstName":"Tanya",
+		//"LastName":"Kaur",
+		//"Title":"Miss"
+		//}
 		public IActionResult GetTest4([FromQuery]StaffMember staffMember)
 		{
 			return Ok($"Name = {staffMember.FirstName}");
@@ -120,12 +130,49 @@ namespace CoreDemoWebAPI.Controllers
 
 		[HttpPost]
 		[Route("api/staffmembers/test5")]
+		//https://localhost:44351/api/staffmembers/test5?FirstName=AAAAA&LastName=BBBBB&Id=12
+		
+		// Body in Postman
+		//{
+		// "FirstName":"Tanya",
+		//"LastName":"Kaur",
+		//"Title":"Miss"
+		//}
+
 		public IActionResult GetTest5([FromQuery] int id, [FromQuery] StaffMember staffMember)
 		{
 			return Ok($"Name = {staffMember.FirstName}");
 		}
 
 		// From QUERY Attribute - END
+
+
+		// Pagination - BEGIN
+		//How to implement Pagination in ASP NET Core Web API
+		// https://www.youtube.com/watch?v=cz_xniYNqww
+
+		// Displays first page
+		//https://localhost:44351/api/staffmembers/readpagination?per_page=1&current_page=1
+
+		// Displays second page
+		//https://localhost:44351/api/staffmembers/readpagination?per_page=1&current_page=2
+
+
+		[Route("api/staffmembers/readpagination")] // this end point or url is important !
+		public IActionResult GetEmployeesUsingPagination([FromQuery] Paginator filter) // can give any name here
+		{
+
+			var paginator = new Paginator(filter.per_page, filter.current_page);
+
+			var staffList = _uow.StaffRepository.GetAll();
+
+			return Ok(staffList.ToList()
+				.Skip((paginator.current_page - 1) * paginator.per_page)
+				.Take(paginator.per_page)); // status code of 200 and json data will get returned
+		}
+
+		// Pagination - END
+
 
 
 		// Adds new record
