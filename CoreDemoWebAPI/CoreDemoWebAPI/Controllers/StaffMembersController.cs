@@ -82,6 +82,52 @@ namespace CoreDemoWebAPI.Controllers
 
 
 
+		// From QUERY Attribute - BEGIN
+
+		[HttpGet]
+		//[Route("api/staffmembers/test2")] // this end point or url is important !
+		[Route("api/staffmembers/test2/{name}")]
+		// If we have the url
+		//https://localhost:44351/api/staffmembers/test2/John?name=Kathy
+		// name variable will hold 'Kathy'
+		// ie. John will be ignored but will use Kathy
+		public IActionResult GetTest2([FromQuery] string name)
+		{
+			return Ok($"Name = {name}");
+		}
+
+
+		[HttpGet]
+		[Route("api/staffmembers/test3/{name}")]
+		// If we have the url
+		//https://localhost:44351/api/staffmembers/test3/John
+		// name variable will hold 'John'
+		public IActionResult GetTest3(string name)
+		{
+			return Ok($"Name = {name}");
+		}
+
+
+
+		[HttpPost]
+		[Route("api/staffmembers/test4")]
+		public IActionResult GetTest4([FromQuery]StaffMember staffMember)
+		{
+			return Ok($"Name = {staffMember.FirstName}");
+		}
+
+
+
+		[HttpPost]
+		[Route("api/staffmembers/test5")]
+		public IActionResult GetTest5([FromQuery] int id, [FromQuery] StaffMember staffMember)
+		{
+			return Ok($"Name = {staffMember.FirstName}");
+		}
+
+		// From QUERY Attribute - END
+
+
 		// Adds new record
 		[HttpPost]
 		[Route("api/staffmembers/create")] // this end point or url is important ! 
