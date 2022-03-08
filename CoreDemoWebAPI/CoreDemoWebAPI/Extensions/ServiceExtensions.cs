@@ -31,6 +31,14 @@ namespace CoreDemoWebAPI.Extensions
             services.AddScoped<ILoggerManager, LoggerManager>();
         }
 
+        // Custom CSV Formatter - BEGIN
+        public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder mvcBuilder)
+        {
+            return mvcBuilder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
+        }
+
+
+        // Custom CSV Formatter - END
 
 
 
