@@ -13,7 +13,7 @@ using CoreDemoWebAPI.Models;
 
 namespace CoreDemoWebAPI.Controllers
 {
-	[Authorize] // Added by AANA
+	//[Authorize] // Added by AANA
 	[ApiController]
 	[ApiVersion("1.0")]
 	[ApiExplorerSettings(GroupName = "v1")]
@@ -80,40 +80,53 @@ namespace CoreDemoWebAPI.Controllers
 			return Ok(_testClass.GetConnectionString());
 		}
 
-		// TestClass - Dependency Injection - END
+        // TestClass - Dependency Injection - END
 
 
 
-		// From QUERY Attribute - BEGIN
+        // From QUERY Attribute - BEGIN
 
-		[HttpGet]
-		//[Route("api/staffmembers/test2")] // this end point or url is important !
-		[Route("api/staffmembers/test2/{name}")]
-		// If we have the url
-		//https://localhost:44351/api/staffmembers/test2/John?name=Kathy
-		// name variable will hold 'Kathy'
-		// ie. John will be ignored but will use Kathy
-		public IActionResult GetTest2([FromQuery] string name)
+        [HttpGet]
+        [Route("api/staffmembers/test2")] // this end point or url is important !
+        [Route("api/staffmembers/test2/{name}")]
+        // If we have the url
+        // https://localhost:44351/api/staffmembers/test2/John?name=Kathy
+
+        // name variable will hold 'Kathy'
+        // ie.John will be ignored but will use Kathy
+
+        public IActionResult GetTest2([FromQuery] string name)
+        {
+            return Ok($"Name = {name}");
+        }
+
+
+        [HttpGet]
+        [Route("api/staffmembers/test3/{name}")]
+        // If we have the url
+        // https://localhost:44351/api/staffmembers/test3/John
+        // name variable will hold 'John'
+        public IActionResult GetTest3(string name)
+        {
+            return Ok($"Name = {name}");
+        }
+
+
+
+        [HttpGet]
+        [Route("api/staffmembers/test4")]
+		//https://localhost:44351/api/staffmembers/test4?FirstName=AAAAA&LastName=BBBBB&Title=Mr
+
+		public IActionResult GetTest4([FromQuery] StaffMember staffMember)
 		{
-			return Ok($"Name = {name}");
+			return Ok($"Name = {staffMember.FirstName}");  // will return AAAAA
 		}
 
 
-		[HttpGet]
-		[Route("api/staffmembers/test3/{name}")]
-		// If we have the url
-		//https://localhost:44351/api/staffmembers/test3/John
-		// name variable will hold 'John'
-		public IActionResult GetTest3(string name)
-		{
-			return Ok($"Name = {name}");
-		}
 
-
-
-		[HttpPost]
-		[Route("api/staffmembers/test4")]
-		//https://localhost:44351/api/staffmembers/test5?FirstName=AAAAA&LastName=BBBBB
+        [HttpGet]
+        [Route("api/staffmembers/test5")]
+        //https://localhost:44351/api/staffmembers/test5?FirstName=AAAAA&LastName=BBBBB&Id=12
 
 		// Body in Postman
 		//{
@@ -121,30 +134,16 @@ namespace CoreDemoWebAPI.Controllers
 		//"LastName":"Kaur",
 		//"Title":"Miss"
 		//}
-		public IActionResult GetTest4([FromQuery]StaffMember staffMember)
-		{
-			return Ok($"Name = {staffMember.FirstName}");
-		}
 
-
-
-		[HttpPost]
-		[Route("api/staffmembers/test5")]
-		//https://localhost:44351/api/staffmembers/test5?FirstName=AAAAA&LastName=BBBBB&Id=12
-		
-		// Body in Postman
-		//{
-		// "FirstName":"Tanya",
-		//"LastName":"Kaur",
-		//"Title":"Miss"
-		//}
-
-		public IActionResult GetTest5([FromQuery] int id, [FromQuery] StaffMember staffMember)
-		{
-			return Ok($"Name = {staffMember.FirstName}");
-		}
+    public IActionResult GetTest5([FromQuery] int id, [FromQuery] StaffMember staffMember)
+    {
+        return Ok($"Name = {staffMember.FirstName}");
+    }
 
 		// From QUERY Attribute - END
+
+
+
 
 
 		// Pagination - BEGIN
@@ -157,26 +156,26 @@ namespace CoreDemoWebAPI.Controllers
 		// Displays second page
 		//https://localhost:44351/api/staffmembers/readpagination?per_page=1&current_page=2
 
-
+		[HttpGet]
 		[Route("api/staffmembers/readpagination")] // this end point or url is important !
-		public IActionResult GetEmployeesUsingPagination([FromQuery] Paginator filter) // can give any name here
-		{
+        public IActionResult GetEmployeesUsingPagination([FromQuery] Paginator filter) // can give any name here
+        {
 
-			var paginator = new Paginator(filter.per_page, filter.current_page);
+            var paginator = new Paginator(filter.per_page, filter.current_page);
 
-			var staffList = _uow.StaffRepository.GetAll();
+            var staffList = _uow.StaffRepository.GetAll();
 
-			return Ok(staffList.ToList()
-				.Skip((paginator.current_page - 1) * paginator.per_page)
-				.Take(paginator.per_page)); // status code of 200 and json data will get returned
-		}
+            return Ok(staffList.ToList()
+                .Skip((paginator.current_page - 1) * paginator.per_page)
+                .Take(paginator.per_page)); // status code of 200 and json data will get returned
+        }
 
-		// Pagination - END
+        // Pagination - END
 
 
 
-		// Adds new record
-		[HttpPost]
+        // Adds new record
+        [HttpPost]
 		[Route("api/staffmembers/create")] // this end point or url is important ! 
 		public IActionResult PostEmployee(StaffMember staffMember)
         {
