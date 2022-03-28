@@ -135,10 +135,56 @@ namespace CoreDemoWebAPI.Controllers
 		//"Title":"Miss"
 		//}
 
-    public IActionResult GetTest5([FromQuery] int id, [FromQuery] StaffMember staffMember)
-    {
-        return Ok($"Name = {staffMember.FirstName}");
-    }
+		public IActionResult GetTest5([FromQuery] int id, [FromQuery] StaffMember staffMember)
+		{
+			return Ok($"Name = {staffMember.FirstName}");
+		}
+
+
+		// SORTING - BEGIN
+
+		[HttpGet]
+		[Route("api/staffmembers/test6")]
+		//https://localhost:44351/api/staffmembers/test6?FirstName=AAAAA&LastName=BBBBB&Id=12&SortBy=Id
+
+
+
+		public IActionResult GetTest6([FromQuery] int id, [FromQuery] StaffMember staffMember, string sortBy, string fields)
+		{
+
+			string sortByField = "Id";
+			switch (sortBy)
+            {
+
+				case "Id":
+				case "FirstName":
+				case "LastName":
+					sortByField = sortBy;
+					break;
+
+				default:
+					sortByField = "Id";
+					break;
+			}
+
+			var staffList = _uow.StaffRepository.GetAll(sortByField);
+
+			//Global Error Handling - BEGIN
+			// Uncomment below line to force exception and it goes into global error handling
+			//throw new Exception("sdsd");
+			//Global Error Handling - END
+
+			_logger.LogInfo("Here is info message from our StaffMembersController - Read Action method");
+
+			return Ok(staffList.ToList()); // status code of 200 and json data will get returned
+
+		}
+
+		// SORTING - END
+
+
+
+
 
 		// From QUERY Attribute - END
 

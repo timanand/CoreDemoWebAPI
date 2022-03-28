@@ -104,7 +104,7 @@ namespace CoreDemoWebAPI.Data
 
         }
 
-        public List<StaffMember> GetAll()
+        public List<StaffMember> GetAll(string sortBy = "Id")
         {
 
             IDbConnection con = null;
@@ -115,7 +115,7 @@ namespace CoreDemoWebAPI.Data
                 con = DbHelper.CreateConnection();
                 con.Open();
 
-                IDbCommand cmd = DbHelper.CreateCommand("SELECT * FROM StaffMembers ORDER BY Id", con);
+                IDbCommand cmd = DbHelper.CreateCommand("SELECT * FROM StaffMembers ORDER BY " + sortBy, con);
                 IDataReader reader = cmd.ExecuteReader();
 
 

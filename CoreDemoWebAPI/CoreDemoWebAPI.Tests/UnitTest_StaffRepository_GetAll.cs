@@ -31,7 +31,7 @@ namespace CoreDemoWebAPI.Tests
             mock = new Mock<IStaffRepository>();
 
             // Arrange
-            mock.Setup(x => x.GetAll()).Returns(listStaff);
+            mock.Setup(x => x.GetAll("")).Returns(listStaff);
 
             // Act
             listStaffReturned = mock.Object.GetAll();

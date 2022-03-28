@@ -45,18 +45,20 @@ namespace CoreDemoWebAPI
 
 
             // Content Negotiation - BEGIN
-            //services.AddControllersWithViews();
+            services.AddControllersWithViews();
+
+            // Comment line above and uncomment below for it work with XML
 
             // This will now work with XML
             // services.AddControllersWithViews().AddXmlDataContractSerializerFormatters();
 
-            // Restricting Media Types
-            services.AddControllersWithViews(config =>
-            {
-                config.RespectBrowserAcceptHeader = true; // this means please use respective accept_header the user is sending
-                config.ReturnHttpNotAcceptable = true; // if someone gives weird accept value we will not accept it eg. text/zzzz --> 406 not acceptable
-            }).AddXmlDataContractSerializerFormatters()
-            .AddCustomCSVFormatter(); // Custom CSV Formatter
+            // Restricting Media Types - this will work with XML
+            //services.AddControllersWithViews(config =>
+            //{
+            //    config.RespectBrowserAcceptHeader = true; // this means please use respective accept_header the user is sending
+            //    config.ReturnHttpNotAcceptable = true; // if someone gives weird accept value we will not accept it eg. text/zzzz --> 406 not acceptable
+            //}).AddXmlDataContractSerializerFormatters()
+            //.AddCustomCSVFormatter(); // Custom CSV Formatter
 
 
             // Content Negotiation - END

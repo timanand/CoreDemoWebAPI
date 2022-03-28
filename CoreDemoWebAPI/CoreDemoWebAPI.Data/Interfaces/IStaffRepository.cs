@@ -11,7 +11,7 @@ namespace CoreDemoWebAPI.Data
 {
     public interface IStaffRepository
     {
-        List<StaffMember> GetAll();
+        List<StaffMember> GetAll(string sortBy = "Id");
 
 
         bool Add(StaffMember staffMember);
